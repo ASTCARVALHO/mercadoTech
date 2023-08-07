@@ -23,6 +23,10 @@ public class Estoque implements EstoqueInterface {
         this.nivelAtual += quantidadeNoEstoqueDeUmProduto;
     }
 
+    public List<Produto> getProdutos() {
+        return this.produtos;
+    }
+
     @Override
     public void adicionarProduto(Produto produto) throws ProdutoJaCadastradoException {
         if (this.produtos.contains(produto)) {
