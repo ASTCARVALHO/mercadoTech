@@ -12,7 +12,8 @@ public class Carrinho extends Estoque {
     }
 
 
-    public void adicionarProdutoNoCarrinho(Produto produto, int quantidadeASerAdicionada) throws ProdutoNaoEncontradoException {
+    public void adicionarProdutoNoCarrinho(Produto produto, int quantidadeASerAdicionada)
+            throws ProdutoNaoEncontradoException {
         if (!super.getProdutos().contains(produto)) {
             throw new ProdutoNaoEncontradoException("Produto de ID " + produto.getIdProduto() + " não encontrado");
         }
@@ -21,7 +22,8 @@ public class Carrinho extends Estoque {
         }
     }
 
-    public void removerProdutoNoCarrinho(Produto produto, int quantidadeASerRemovida) throws ProdutoNaoEncontradoException {
+    public void removerProdutoNoCarrinho(Produto produto, int quantidadeASerRemovida)
+            throws ProdutoNaoEncontradoException {
         if (!super.getProdutos().contains(produto)) {
             throw new ProdutoNaoEncontradoException("Produto de ID " + produto.getIdProduto() + " não encontrado");
         }

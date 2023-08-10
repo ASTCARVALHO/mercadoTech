@@ -10,7 +10,7 @@ public class MensagemParaAlguem extends Mensagem {
     }
 
     public String getEmailDestinatario() {
-        return emailDestinatario;
+        return this.emailDestinatario;
     }
 
     public void setEmailDestinatario(String emailDestinatario) {
@@ -19,9 +19,8 @@ public class MensagemParaAlguem extends Mensagem {
 
     @Override
     public String getTextoCompletoAExibir() {
-        if (super.ehAnonima()) {
+        if (super.ehAnonima())
             return "Mensagem para " + this.emailDestinatario + ". Texto: " + super.getTexto();
-        }
         return "Mensagem de: " + super.getEmailRemetente() + " para " + this.emailDestinatario +
                 ". Texto: " + super.getTexto();
     }

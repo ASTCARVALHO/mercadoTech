@@ -19,21 +19,19 @@ public class SistemaAmigo {
 
     public void cadastraAmigo(String nomeAmigo, String emailAmigo) throws AmigoJaCadastradoException {
         Amigo amigo = new Amigo(nomeAmigo, emailAmigo);
-        if (!this.amigos.contains(amigo)) {
+        if (!this.amigos.contains(amigo))
             this.amigos.add(amigo);
-        } else {
+        else
             throw new AmigoJaCadastradoException("Amigo de email " + emailAmigo + " já cadastrado anteriormente");
-        }
     }
 
     public Amigo pesquisaAmigo(String emailAmigo) throws AmigoInexistenteException {
         Amigo amigo;
-        for (Amigo a : this.amigos) {
+        for (Amigo a : this.amigos)
             if (a.getEmail().equals(emailAmigo)) {
                 amigo = a;
                 return amigo;
             }
-        }
         throw new AmigoInexistenteException("Amigo de email " + emailAmigo + " não encontrado");
     }
 
@@ -42,19 +40,17 @@ public class SistemaAmigo {
         this.mensagens.add(mensagem);
     }
 
-    public void enviarMensagemParaAlguem(String texto, String emailRemetente,
-                                         String emailDestinatario, boolean ehAnonima) {
+    public void enviarMensagemParaAlguem(
+            String texto, String emailRemetente,
+            String emailDestinatario, boolean ehAnonima) {
         Mensagem mensagem = new MensagemParaAlguem(texto, emailRemetente, emailDestinatario, ehAnonima);
         this.mensagens.add(mensagem);
     }
 
     public List<Mensagem> pesquisaMensagensAnonimas() {
         List<Mensagem> mensagensAnonimas = new LinkedList<>();
-        for (Mensagem m : this.mensagens) {
-            if (m.ehAnonima()) {
-                mensagensAnonimas.add(m);
-            }
-        }
+        for (Mensagem m : this.mensagens)
+            if (m.ehAnonima()) mensagensAnonimas.add(m);
         return mensagensAnonimas;
     }
 
@@ -64,35 +60,27 @@ public class SistemaAmigo {
 
     public void configuraAmigoSecretoDe(String emailDaPessoa, String emailAmigoSorteado)
             throws AmigoInexistenteException {
-
         Amigo amigo = null;
-        for (Amigo a : this.amigos) {
+        for (Amigo a : this.amigos)
             if (a.getEmail().equals(emailDaPessoa)) {
                 a.setEmailAmigoSorteado(emailAmigoSorteado);
                 amigo = a;
             }
-        }
-        if (amigo == null) {
+        if (amigo == null)
             throw new AmigoInexistenteException("Amigo de email " + emailDaPessoa + " não encontrado");
-        }
     }
 
     public String pesquisaAmigoSecretoDe(String emailDaPessoa)
             throws AmigoInexistenteException, AmigoNaoSorteadoException {
-
         Amigo amigo = null;
-        for (Amigo a : this.amigos) {
-            if (a.getEmail().equals(emailDaPessoa)) {
+        for (Amigo a : this.amigos)
+            if (a.getEmail().equals(emailDaPessoa))
                 amigo = a;
-            }
-        }
-        if (amigo == null) {
+        if (amigo == null)
             throw new AmigoInexistenteException("Amigo de email " + emailDaPessoa + " não encontrado");
-        } else {
-            if (amigo.getEmailAmigoSorteado() == null) {
+        else
+            if (amigo.getEmailAmigoSorteado() == null)
                 throw new AmigoNaoSorteadoException("Amigo secreto de " + emailDaPessoa + " ainda não foi sorteado");
-            }
-        }
         return amigo.getEmailAmigoSorteado();
     }
 
@@ -105,18 +93,14 @@ public class SistemaAmigo {
                 amigoSorteado = amigosNaoSorteados.get(posicaoDaListaSorteada);
 
                 // Verifica se ele não tirou ele mesmo
-                if (amigoSorteado.getEmail().equals(a.getEmail())) {
-                    if (posicaoDaListaSorteada == (amigosNaoSorteados.size() - 1)) {
+                if (amigoSorteado.getEmail().equals(a.getEmail()))
+                    if (posicaoDaListaSorteada == (amigosNaoSorteados.size() - 1))
                         amigoSorteado = amigosNaoSorteados.get(posicaoDaListaSorteada - 1);
-                    } else {
+                    else
                         amigoSorteado = amigosNaoSorteados.get(posicaoDaListaSorteada + 1);
-                    }
-                }
-
             }
-            if (amigoSorteado == null) {
+            if (amigoSorteado == null)
                 throw new AmigoInexistenteException("Amigo não encontrado");
-            }
             a.setEmailAmigoSorteado(amigoSorteado.getEmail());
             amigosNaoSorteados.remove(amigoSorteado);
         }
