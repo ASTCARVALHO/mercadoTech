@@ -40,4 +40,5 @@ public class TestaSistemaAmigoGUI {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
+
 }
