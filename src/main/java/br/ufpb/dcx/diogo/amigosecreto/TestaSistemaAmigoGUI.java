@@ -19,10 +19,9 @@ public class TestaSistemaAmigoGUI {
 
             sistemaAmigo.sortear();
 
-            for (Amigo a : sistemaAmigo.getAmigos()) {
-                JOptionPane.showMessageDialog(null,
-                        "Amigo secreto de " + a.getNome() + " é " + a.getEmailAmigoSorteado());
-            }
+            for (Amigo a : sistemaAmigo.getAmigos())
+                JOptionPane.showMessageDialog(
+                        null, "Amigo secreto de " + a.getNome() + " é " + a.getEmailAmigoSorteado());
 
             int posicaoDaListaSorteada = (int) (Math.random() * sistemaAmigo.getAmigos().size());
             Amigo amigoAEnviarMensagem = sistemaAmigo.getAmigos().get(posicaoDaListaSorteada);

@@ -38,9 +38,8 @@ public class SistemaAmigoMap {
         this.mensagens.add(mensagem);
     }
 
-    public void enviarMensagemParaAlguem(
-            String texto, String emailRemetente,
-            String emailDestinatario, boolean ehAnonima) {
+    public void enviarMensagemParaAlguem(String texto, String emailRemetente,
+                                         String emailDestinatario, boolean ehAnonima) {
         Mensagem mensagem = new MensagemParaAlguem(texto, emailRemetente, emailDestinatario, ehAnonima);
         this.mensagens.add(mensagem);
     }
@@ -73,9 +72,8 @@ public class SistemaAmigoMap {
             amigo = this.amigos.get(emailDaPessoa);
         if (amigo == null)
             throw new AmigoInexistenteException("Amigo de email " + emailDaPessoa + " não encontrado");
-        else
-            if (amigo.getEmailAmigoSorteado() == null)
-                throw new AmigoNaoSorteadoException("Amigo secreto de " + emailDaPessoa + " ainda não foi sorteado");
+        if (amigo.getEmailAmigoSorteado() == null)
+            throw new AmigoNaoSorteadoException("Amigo secreto de " + emailDaPessoa + " ainda não foi sorteado");
         return amigo.getEmailAmigoSorteado();
     }
 
