@@ -1,4 +1,4 @@
-package br.ufpb.dcx.diogo.pessoas;
+package br.ufpb.dcx.pessoas;
 
 import java.time.Year;
 

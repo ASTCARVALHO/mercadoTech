@@ -1,4 +1,4 @@
-package br.ufpb.dcx.diogo.fibonacci;
+package br.ufpb.dcx.fibonacci;
 
 import java.util.Scanner;
 

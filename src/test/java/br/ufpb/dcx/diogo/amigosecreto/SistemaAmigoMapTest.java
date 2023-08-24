@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 
+import br.ufpb.dcx.amigosecreto.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
