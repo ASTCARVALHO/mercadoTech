@@ -1,5 +1,5 @@
 
-package br.ufpb.dcx.diogo.amigosecreto;
+package br.ufpb.dcx.amigosecreto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
