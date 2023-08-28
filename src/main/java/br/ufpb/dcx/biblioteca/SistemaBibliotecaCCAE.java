@@ -4,8 +4,18 @@ import java.util.*;
 
 public class SistemaBibliotecaCCAE implements SistemaBiblioteca {
 
-    private Map<String, Livro> livros = new HashMap<String, Livro>();
-    private Map<String, Usuario> usuarios = new HashMap<String, Usuario>();
+    private Map<String, Livro> livros;
+    private Map<String, Usuario> usuarios;
+
+    public SistemaBibliotecaCCAE(Map<String, Livro> livros, Map<String, Usuario> usuarios) {
+        this.livros = livros;
+        this.usuarios = usuarios;
+    }
+
+    public SistemaBibliotecaCCAE() {
+        this.livros = new HashMap<>();
+        this.usuarios = new HashMap<>();
+    }
 
     public boolean pegarLivro(String matriculaUsuario, String idLivro)
             throws UsuarioInexistenteException, LivroInexistenteException {
@@ -39,9 +49,7 @@ public class SistemaBibliotecaCCAE implements SistemaBiblioteca {
 
         if (!livro.isEstahEmprestado()) return false;
 
-        if (usuario.removerEmprestimoDeLivro(livro)) {
-            livro.setEstahEmprestado(false);
-        }
+        if (usuario.removerEmprestimoDeLivro(livro)) livro.setEstahEmprestado(false);
 
         return true;
     }

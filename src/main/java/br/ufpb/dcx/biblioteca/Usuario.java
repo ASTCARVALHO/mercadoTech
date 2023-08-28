@@ -1,6 +1,7 @@
 package br.ufpb.dcx.biblioteca;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 public class Usuario {
 
@@ -13,6 +14,7 @@ public class Usuario {
         this.matricula = matricula;
         this.nome = nome;
         this.tipo = tipo;
+        this.livrosEmprestados = new LinkedList<>();
     }
 
     public void adicionarEmprestimoDeLivro(Livro livro) {
