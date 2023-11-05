@@ -1,54 +1,96 @@
 package br.ufpb.dcx.comerciotech;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.io.*;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Estoque implements EstoqueInterface {
 
-    private List<Produto> produtos;
-    private int capacidadeMaxima;
+    private final Map<String, Produto> produtosNoEstoque;
+    private final int capacidadeMaxima;
     private int nivelAtual;
 
     public Estoque() {
-        this.produtos = new LinkedList<>();
-        this.capacidadeMaxima = 10000;
+        this.produtosNoEstoque = new HashMap<>();
+        this.capacidadeMaxima = 1000;
         this.nivelAtual = 0;
     }
 
+    public Map<String, Produto> getProdutosNoEstoque() {
+        return produtosNoEstoque;
+    }
+
     public int getNivelAtual() {
-        return this.nivelAtual;
+        return nivelAtual;
     }
 
-    public void setNivelAtual(int quantidadeNoEstoqueDeUmProduto) {
-        this.nivelAtual += quantidadeNoEstoqueDeUmProduto;
+    public void setNivelAtual(int nivelAtual) {
+        this.nivelAtual = nivelAtual;
     }
 
-    public List<Produto> getProdutos() {
-        return this.produtos;
+    private void atualizarNivelDoEstoque(int quantAMais) {
+        this.nivelAtual += quantAMais;
+    }
+
+    public void adicionarProduto(String id, Produto produto, int quantidade)
+            throws ProdutoJaCadastradoException, EstoqueCheioException {
+        if (produtosNoEstoque.containsKey(id))
+            throw new ProdutoJaCadastradoException(id);
+        if (nivelAtual == capacidadeMaxima)
+            throw new EstoqueCheioException(capacidadeMaxima);
+        produtosNoEstoque.put(id, produto);
+        atualizarNivelDoEstoque(quantidade);
+    }
+
+    public void removerProduto(String id) throws ProdutoNaoEncontradoException {
+        if (!produtosNoEstoque.containsKey(id))
+            throw new ProdutoNaoEncontradoException(id);
+        Produto produto = produtosNoEstoque.get(id);
+        atualizarNivelDoEstoque(-produto.getQntNoEstoque());
+        produtosNoEstoque.remove(id);
+    }
+
+    public double consultarPrecoDoProduto(String id) throws ProdutoNaoEncontradoException {
+        if (!produtosNoEstoque.containsKey(id))
+            throw new ProdutoNaoEncontradoException(id);
+        return produtosNoEstoque.get(id).getPreco();
+    }
+
+    public boolean verificarDisponibilidade(String id, int quantidade) throws ProdutoNaoEncontradoException {
+        if (!produtosNoEstoque.containsKey(id))
+            throw new ProdutoNaoEncontradoException(id);
+        Produto produto = produtosNoEstoque.get(id);
+        int quantidadeNoEstoque = produto.getQntNoEstoque();
+        return quantidade <= quantidadeNoEstoque;
+    }
+
+    public void gerarRelatorio(String nomeArquivo) {
+        GravadorDeDadosDoEstoque gravador = new GravadorDeDadosDoEstoque();
+        try (PrintWriter printWriter = new PrintWriter(nomeArquivo)) {
+            printWriter.println("Relatório do estoque");
+            printWriter.println("Data: " + LocalDate.now());
+            printWriter.println();
+            Estoque estoque = gravador.recuperarDadosDoEstoque();
+            printWriter.println(estoque);
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Override
-    public void adicionarProduto(Produto produto) throws ProdutoJaCadastradoException {
-        if (this.produtos.contains(produto)) {
-            throw new ProdutoJaCadastradoException("Produto de ID " + produto.getIdProduto() + " já cadastrado");
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Nível atual do estoque: ").append(nivelAtual).append("\n");
+        builder.append("Produtos no estoque: ").append("\n");
+        int t = produtosNoEstoque.size();
+        int i = 0;
+        for (Produto p : produtosNoEstoque.values()) {
+            builder.append(p);
+            if (i != t - 1)
+                builder.append("\n\n");
+            i++;
         }
-        this.produtos.add(produto);
+        return builder.toString();
     }
-
-    @Override
-    public void removerProduto(Produto produto) throws ProdutoNaoEncontradoException {
-        if (!this.produtos.contains(produto)) {
-            throw new ProdutoNaoEncontradoException("Produto de ID " + produto.getIdProduto() + " não encontrado");
-        }
-        this.produtos.remove(produto);
-    }
-
-    @Override
-    public boolean verificarDisponibilidade(Produto produto, int pedidos) throws ProdutoNaoEncontradoException {
-        if (!this.produtos.contains(produto)) {
-            throw new ProdutoNaoEncontradoException("Produto de ID " + produto.getIdProduto() + " não encontrado");
-        }
-        return produto.getQntNoEstoque() >= pedidos;
-    }
-
 }
