@@ -8,19 +8,19 @@ public class Produto implements Comparable<Produto>, Serializable {
     private final String nomeProduto;
     private final String idProduto;
     private final String fabricante;
-    private final TipoProduto tipoProduto;
+    private final Departamento departamento;
     private double preco;
-    private int qntNoEstoque;
+    private int quantidade;
 
     public Produto(String nomeProduto, String idProduto, String fabricante,
-                   TipoProduto tipoProduto, double preco, int qntNoEstoque)
+                   Departamento departamento, double preco, int quantidade)
     {
         this.nomeProduto = nomeProduto;
         this.idProduto = idProduto;
         this.fabricante = fabricante;
-        this.tipoProduto = tipoProduto;
+        this.departamento = departamento;
         this.preco = preco;
-        this.qntNoEstoque = qntNoEstoque;
+        this.quantidade = quantidade;
     }
 
     public String getNomeProduto() {
@@ -35,8 +35,8 @@ public class Produto implements Comparable<Produto>, Serializable {
         return fabricante;
     }
 
-    public TipoProduto getTipoProduto() {
-        return tipoProduto;
+    public Departamento getDepartamento() {
+        return departamento;
     }
 
     public double getPreco() {
@@ -47,12 +47,12 @@ public class Produto implements Comparable<Produto>, Serializable {
         this.preco = preco;
     }
 
-    public int getQntNoEstoque() {
-        return qntNoEstoque;
+    public int getQuantidade() {
+        return quantidade;
     }
 
-    public void setQntNoEstoque(int qntNoEstoque) {
-        this.qntNoEstoque = qntNoEstoque;
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
     @Override
@@ -60,21 +60,21 @@ public class Produto implements Comparable<Produto>, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return Objects.equals(idProduto, produto.idProduto);
+        return Objects.equals(nomeProduto, produto.nomeProduto) && Objects.equals(idProduto, produto.idProduto);
     }
 
     public String toString() {
-        return  nomeProduto + "\n"
+        return nomeProduto + "\n"
                 + "ID: " + idProduto + "\n"
                 + "Fabricante: " + fabricante + "\n"
-                + "Categoria: " + tipoProduto + "\n"
+                + "Departamento: " + departamento + "\n"
                 + "Valor: R$ " + preco + "\n"
-                + "Quantidade no estoque: " + qntNoEstoque;
+                + "Quantidade no estoque: " + quantidade;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nomeProduto, idProduto, fabricante, preco, qntNoEstoque);
+        return Objects.hash(nomeProduto, idProduto, fabricante, preco, quantidade);
     }
 
     @Override

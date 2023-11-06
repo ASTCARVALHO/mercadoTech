@@ -1,8 +1,8 @@
 package br.ufpb.dcx.comerciotech;
 
-public enum TipoProduto {
+public enum Departamento {
 
-    HARDWARE, PERIFERICO, TELAS, CONSOLE, COMPUTADOR, CELULAR;
+    HARDWARE, PERIFERICO, TELAS, CONSOLE, COMPUTADOR, CELULAR, JOGOS;
 
     public String toString() {
         if (this.equals(HARDWARE)) return "Hardware";
@@ -11,10 +11,11 @@ public enum TipoProduto {
         else if (this.equals(CONSOLE)) return "Consoles";
         else if (this.equals(COMPUTADOR)) return "Computadores/Notebooks";
         else if (this.equals(CELULAR)) return "Celulares";
+        else if (this.equals(JOGOS)) return "Jogos";
         return null;
     }
 
-    public static TipoProduto parseTipo(String tipo) {
+    public static Departamento parseTipo(String tipo) {
         return switch (tipo) {
             case "Hardware" -> HARDWARE;
             case "Periféricos" -> PERIFERICO;
@@ -22,6 +23,7 @@ public enum TipoProduto {
             case "Consoles" -> CONSOLE;
             case "Computadores/Notebooks" -> COMPUTADOR;
             case "Celulares" -> CELULAR;
+            case "Jogos" -> JOGOS;
             default -> null;
         };
     }
