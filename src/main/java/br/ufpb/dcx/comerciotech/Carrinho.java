@@ -49,7 +49,7 @@ public class Carrinho {
         return total * quantidade;
     }
 
-    private Set<Produto> retornarProdutosSemDuplicatas() {
+    public Set<Produto> retornarProdutosSemDuplicatas() {
         return new HashSet<>(produtosNoCarrinho);
     }
 
@@ -63,7 +63,7 @@ public class Carrinho {
         Set<Produto> produtosSemDuplicatas = retornarProdutosSemDuplicatas();
         builder.append("Produtos no carrinho: \n");
         for (Produto p : produtosSemDuplicatas) {
-            int quantidade = contarOcorrencias(p);
+            int quantidade = contarOcorrenciasNoCarrinho(p);
             double precoTotalDoProduto = calculaTotalDoProduto(p, quantidade);
             builder.append(quantidade).append("x ").append(p.getNomeProduto());
             builder.append(" -> R$ ").append(valorFormatado(precoTotalDoProduto)).append("\n");
@@ -72,7 +72,7 @@ public class Carrinho {
         return builder.toString();
     }
 
-    private int contarOcorrencias(Produto produtoParaContar) {
+    public int contarOcorrenciasNoCarrinho(Produto produtoParaContar) {
         if (produtosNoCarrinho.contains(produtoParaContar))
             return Collections.frequency(produtosNoCarrinho, produtoParaContar);
         return 0;
@@ -89,9 +89,14 @@ public class Carrinho {
         carrinho.adicionarProdutoNoCarrinho(estoque, produto1, 2);
         carrinho.adicionarProdutoNoCarrinho(estoque, produto2, 5);
 
-        System.out.println();
+        //System.out.println(carrinho);
+        Compra compra = new Compra();
+        compra.processarCompra(estoque, carrinho);
 
+        for(Produto p : estoque.getProdutosNoEstoque().values())
+            System.out.println(p.getQuantidade());
         System.out.println(carrinho);
+        gravadorDeDadosDoEstoque.salvarDadosDoEstoque(estoque);
+        estoque.gerarRelatorio("relatorio.txt");
     }
-
 }

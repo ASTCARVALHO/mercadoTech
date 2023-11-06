@@ -51,8 +51,8 @@ public class Produto implements Comparable<Produto>, Serializable {
         return quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void atualizarQuantidade(int quantidade) {
+        this.quantidade += quantidade;
     }
 
     @Override

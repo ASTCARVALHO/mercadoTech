@@ -28,7 +28,7 @@ public class Estoque implements EstoqueInterface {
         this.nivelAtual = nivelAtual;
     }
 
-    private void atualizarNivelDoEstoque(int quantAMais) {
+    public void atualizarNivelDoEstoque(int quantAMais) {
         this.nivelAtual += quantAMais;
     }
 
