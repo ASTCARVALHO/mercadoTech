@@ -11,9 +11,9 @@ public class Carrinho {
         this.produtosNoCarrinho = new ArrayList<>();
     }
 
-    public void adicionarProdutoNoCarrinho(Estoque estoque, Produto produto, int quantidade)
+    public void adicionarProdutoNoCarrinho(SistemaEstoque sistemaEstoque, Produto produto, int quantidade)
             throws ProdutoNaoEncontradoException {
-        boolean disponivel = estoque.verificarDisponibilidade(produto.getIdProduto(), quantidade);
+        boolean disponivel = sistemaEstoque.verificarDisponibilidade(produto.getIdProduto(), quantidade);
         if (disponivel)
             for (int i = 0; i < quantidade; i++)
                 produtosNoCarrinho.add(produto);
@@ -78,14 +78,15 @@ public class Carrinho {
         return 0;
     }
 
-    public static void main(String[] args) throws ProdutoNaoEncontradoException {
-        Carrinho carrinho = new Carrinho();
-        GravadorDeDadosDoEstoque gravadorDeDadosDoEstoque = new GravadorDeDadosDoEstoque();
-        Estoque estoque = gravadorDeDadosDoEstoque.recuperarDadosDoEstoque();
+  /*  public static void main(String[] args) throws ProdutoNaoEncontradoException, ProdutoJaCadastradoException, EstoqueCheioException {
+       GravadorDeDadosDoEstoque gravadorDeDadosDoEstoque = new GravadorDeDadosDoEstoque();
+        Estoque estoque =  gravadorDeDadosDoEstoque.recuperarDadosDoEstoque();
         Produto produto1 = new Produto("Intel Core i5-13400F", "405766", "Intel",
                 Departamento.HARDWARE, 1348.99, 150);
         Produto produto2 = new Produto("Microsoft Xbox Series S 512GB", "200089",
                 "Microsoft", Departamento.CONSOLE, 2491.94, 200);
+        gravadorDeDadosDoEstoque.salvarDadosDoEstoque(estoque);
+        Carrinho carrinho = new Carrinho();
         carrinho.adicionarProdutoNoCarrinho(estoque, produto1, 2);
         carrinho.adicionarProdutoNoCarrinho(estoque, produto2, 5);
 
@@ -98,5 +99,5 @@ public class Carrinho {
         System.out.println(carrinho);
         gravadorDeDadosDoEstoque.salvarDadosDoEstoque(estoque);
         estoque.gerarRelatorio("relatorio.txt");
-    }
+    }*/
 }

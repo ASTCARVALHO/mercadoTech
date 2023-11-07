@@ -7,6 +7,6 @@ public interface EstoqueInterface extends Serializable {
     void removerProduto(String id) throws ProdutoNaoEncontradoException;
     double consultarPrecoDoProduto(String id) throws ProdutoNaoEncontradoException;
     boolean verificarDisponibilidade(String id, int quantidade) throws ProdutoNaoEncontradoException;
-    void gerarRelatorio(String nomeDoArquivo);
+  /*  void gerarRelatorio(String nomeDoArquivo);*/
 
 }

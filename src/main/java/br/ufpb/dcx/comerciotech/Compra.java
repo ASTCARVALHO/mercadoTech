@@ -1,7 +1,7 @@
 package br.ufpb.dcx.comerciotech;
 
 
-public class Compra extends Carrinho {
+public class    Compra extends Carrinho {
 
     public int numeroDoPedido = 0;
     private double valorTotalDaCompra;
@@ -10,11 +10,11 @@ public class Compra extends Carrinho {
         this.numeroDoPedido += 1;
     }
 
-    public void processarCompra(Estoque estoque, Carrinho carrinho) {
-        for (Produto produto : estoque.getProdutosNoEstoque().values()) {
+    public void processarCompra(SistemaEstoque sistemaEstoque, Carrinho carrinho) {
+        for (Produto produto : sistemaEstoque.getProdutosNoEstoque().values()) {
             int quantidadeNoCarrinho = carrinho.contarOcorrenciasNoCarrinho(produto);
             produto.atualizarQuantidade(-quantidadeNoCarrinho);
-            estoque.atualizarNivelDoEstoque(-quantidadeNoCarrinho);
+            sistemaEstoque.atualizarNivelDoEstoque(-quantidadeNoCarrinho);
         }
         carrinho.limparCarrinho();
     }

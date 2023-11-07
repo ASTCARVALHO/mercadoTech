@@ -1,32 +1,35 @@
 package br.ufpb.dcx.comerciotech;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NavigableMap;
 
 public class GravadorDeDadosDoEstoque {
 
     private static final String NOME_ARQUIVO = "estoque.dat";
 
-    public void salvarDadosDoEstoque(Estoque estoque) {
+    public void salvarDadosDoEstoque(Map<String,Produto> produtosEstoque) throws IOException {
+        ObjectOutputStream out = null;
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(NOME_ARQUIVO);
-            ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream);
-            outputStream.writeObject(estoque);
-            outputStream.close();
-            fileOutputStream.close();
+           out = new ObjectOutputStream(new FileOutputStream(NOME_ARQUIVO));
+           out.writeObject(produtosEstoque);
         } catch (IOException e) {
             System.err.println(e.getMessage());
+            throw new IOException("Erro ao salvar os arquivos");
         }
     }
 
-    public Estoque recuperarDadosDoEstoque() {
-        Estoque estoque = null;
+    public Map<String,Produto> recuperarDadosDoEstoque() throws IOException {
+        ObjectInputStream in = null;
         try {
-            FileInputStream arquivoInput = new FileInputStream(NOME_ARQUIVO);
-            ObjectInputStream objectInputStream = new ObjectInputStream(arquivoInput);
-            estoque = (Estoque) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println(e.getMessage());
+            in = new ObjectInputStream(new FileInputStream(NOME_ARQUIVO));
+            return (Map<String, Produto>) in.readObject();
+        }catch (Exception e){
+            System.out.println("Não foi possivel recuperar o estoque");
+            throw new IOException("Não foi possivel recuperar os dados do arquivo");
+        }finally {
+            if(in != null) in.close();
         }
-        return estoque;
     }
 }
